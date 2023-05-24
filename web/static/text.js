@@ -1,0 +1,1 @@
+var skipstekst = "Fant ingen AIS-data i dette tidsrommet";

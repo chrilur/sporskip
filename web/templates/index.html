@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skipssøk</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='text.js') }}"></script>
+</head>
+<body>
+    <h1>Søk etter skip</h1>
+    <form method="POST" action="/">
+        <div class="form-group">
+            <label for="imo">IMO-nummer:</label>
+            <input type="text" name="imo" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="startdato">Startdato (ÅÅÅÅ-MM-DD):</label>
+                <input type="text" name="startdato" required>
+            </div>
+            <div class="form-group">
+                <label for="starttid">Starttid (HHMM):</label>
+                <input type="text" name="starttid" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="stoppdato">Stoppdato (ÅÅÅÅ-MM-DD):</label>
+                <input type="text" name="stoppdato" required>
+            </div>
+            <div class="form-group">
+                <label for="stopptid">Stopptid (HHMM):</label>
+                <input type="text" name="stopptid" required>
+            </div>
+        </div>
+        <input type="submit" value="Søk">
+    </form>
+        <p id="skipsinfo"></p>
+        <iframe src="{{ url_for('skipskart') }}" width="100%" height="2000px">
+
+        </iframe>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("skipsinfo").textContent = skipstekst;
+            });
+        </script>
+</body>
+</html>
