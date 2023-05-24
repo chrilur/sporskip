@@ -18,12 +18,12 @@ Her gjøres request-en til API-et til Kystdatahuset. Jeg bruker IMO-nummer som v
 
 Funksjonen getShipInfoFromIMO(imo) henter ut alle tilgjengelige metadata om fartøyet. Output er en fortegnelse.
 
-skipsPos(imo) gjør selv spørringen mot API-endepunktet. Brukeren blir bedt om starttid og stopptid for søket. Kystdatahuset anbefaler ikke lengre enn en ukes tidsintervall, da datasettet kan bli svært stort.
+skipsPos(imo) gjør selve spørringen mot API-endepunktet. Brukeren blir bedt om starttid og stopptid for søket. Kystdatahuset anbefaler ikke lengre enn en ukes tidsintervall, da datasettet kan bli svært stort.
 
 Funksjonen genererer en geoJSON-fil av alle lokasjonsdataene den finner. Filen blir lagret med et unikt filnavn i mappen data. Det blir også generert en liste med noen få metadata som blir lagret som en .pickle. Disse dataene er til å markere endepunktene for skipets kurs i kartet når det plottes.
 
 ## plotskip.py
-Her plottes dataene som akkurat ble lagret i et folium-kart. Det genereres også en HTML-fil med en <div> over kartet som viser navn åp fartøy, tidsperiode, IMO- og MMSI-nummer. Se bildeeksempler i bildemappen.
+Her plottes dataene, som skipsPos akkurat lagret, i et folium-kart. Det genereres også en HTML-fil med en 'div' over kartet som viser navn på fartøy, tidsperiode, IMO- og MMSI-nummer. Se bildeeksempler i bildemappen.
 
 ## web
 Jeg ville lage en app som kunne tas i bruk også av andre som ikke har Python-kompetanse. Jeg har derfor laget en flask-app som benytter de samme skriptene, men som gjør det mulig å gi input i et web-grensesnitt. Se bildeeksempel i bildemappen.
