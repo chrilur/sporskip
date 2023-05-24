@@ -3,7 +3,7 @@ import json
 
 url = "https://kystdatahuset.no/ws/api/auth/login"
 headers = {"accept": "*/*", "Content-Type": "application/json"}
-payload = {"username": "christian.lura@nrk.no", "password": "0ns3gur1"}
+payload = {"username": "navn@firma.no", "password": "passord_her"}
 
 response = requests.post(url, headers=headers, data=json.dumps(payload))
 
