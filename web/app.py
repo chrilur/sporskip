@@ -15,17 +15,20 @@ def home():
         stopptid = request.form.get('stopptid')
 
         skipsPos(imo, startdato, starttid, stoppdato, stopptid)
-        #oppdater_index()
-        response = make_response(render_template('index.html'))
-        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
-        return response
-    else:
-        #oppdater_index()
-        response = make_response(render_template('index.html'))
-        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
-        return response
 
-@app.route('../data/skipskart')
+        # Les det genererte kart-HTML-innholdet fra filen
+        with open('data/skipskart.html', 'r') as f:
+            skipskart_html = f.read()
+
+        #Les tekstfilen
+        with open('static/text.js', 'r') as f:
+            tekstinnhold = f.read()
+
+        return render_template('index.html', skipskart_html=skipskart_html, tekstinnhold=tekstinnhold)
+    else:
+        return render_template('index.html')
+
+@app.route('/data/skipskart')
 def skipskart():
     return send_from_directory('data', 'skipskart.html')
 

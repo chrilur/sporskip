@@ -7,7 +7,8 @@
     <script src="{{ url_for('static', filename='text.js') }}"></script>
 </head>
 <body>
-    <h1>Søk etter skip</h1>
+    <div id="content-container">
+        <h1>Søk etter skip</h1>
     <form method="POST" action="/">
         <div class="form-group">
             <label for="imo">IMO-nummer:</label>
@@ -35,14 +36,52 @@
         </div>
         <input type="submit" value="Søk">
     </form>
-        <p id="skipsinfo"></p>
-        <iframe src="{{ url_for('skipskart') }}" width="100%" height="2000px">
+        <p id="skipsinfo">{{ tekstinnhold }}</p>
+        <div id="map-container">
+            <!-- include the map content directly -->
+            {{ skipskart_html|safe }}
+    </div>
+    <script>
+        var form = document.querySelector("form");
+        var contentContainer = document.getElementById("content-container");
 
-        </iframe>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("skipsinfo").textContent = skipstekst;
-            });
-        </script>
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var imo = document.querySelector("input[name='imo']").value;
+            var startdato = document.querySelector("input[name='startdato']").value;
+            var starttid = document.querySelector("input[name='starttid']").value;
+            var stoppdato = document.querySelector("input[name='stoppdato']").value;
+            var stopptid = document.querySelector("input[name='stopptid']").value;
+
+            // Send an AJAX request to the server to fetch the updated skipskart HTML content
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    contentContainer.innerHTML = response;
+
+                    //Sjekk om skjemaet allerede finnes i det nye innholdet
+                    var newForm = document.querySelector("form");
+                    if (!newForm) {
+                        // Hvis skjemaet ikke finnes, legg det til
+                        mapContainer.appendChild(form);
+                    }
+                }
+            };
+            xhr.send("imo=" +
+            encodeURIComponent(imo) +
+            "&startdato=" +
+            encodeURIComponent(startdato) +
+            "&starttid=" +
+            encodeURIComponent(starttid) +
+            "&stoppdato=" +
+            encodeURIComponent(stoppdato) +
+            "&stopptid=" +
+            encodeURIComponent(stopptid));
+        });
+    </script>
 </body>
 </html>
